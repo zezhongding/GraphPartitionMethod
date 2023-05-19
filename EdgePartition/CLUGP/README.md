@@ -1,13 +1,14 @@
 # Please cite the infomation below when using this code for publishing 
 ```bash
-@INPROCEEDINGS{9835624,
-  author={Kong, Deyu and Xie, Xike and Zhang, Zhuoxu},
-  booktitle={2022 IEEE 38th International Conference on Data Engineering (ICDE)}, 
-  title={Clustering-based Partitioning for Large Web Graphs}, 
-  year={2022},
-  volume={},
-  number={},
-  pages={593-606},
-  doi={10.1109/ICDE53745.2022.00049}}
-
+@inproceedings{KongXZ22,
+  author       = {Deyu Kong and
+                  Xike Xie and
+                  Zhuoxu Zhang},
+  title        = {Clustering-based Partitioning for Large Web Graphs},
+  booktitle    = {38th {IEEE} International Conference on Data Engineering, {ICDE} 2022,
+                  Kuala Lumpur, Malaysia, May 9-12, 2022},
+  pages        = {593--606},
+  publisher    = {{IEEE}},
+  year         = {2022},
+}
 ```
