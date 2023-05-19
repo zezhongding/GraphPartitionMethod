@@ -1,4 +1,4 @@
-# Use this code for publishing please cite
+# Please cite the infomation below when using this code for publishing 
 ```bash
 @INPROCEEDINGS{9835624,
   author={Kong, Deyu and Xie, Xike and Zhang, Zhuoxu},
