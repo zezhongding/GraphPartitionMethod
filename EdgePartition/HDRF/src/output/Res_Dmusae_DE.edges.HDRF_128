@@ -1,0 +1,15 @@
+input graph: newpartition/src/data/musae_DE.edges
+vCount: 9498
+eCount: 153138
+averageDegree: 32.2463676563487
+partitionNum: 128
+lambda: 1.05
+epsilon: 1.0E-4
+partitionNum: 128
+---------------start-------------
+Partition num:128
+Partition time: 180 ms
+Relative balance load:5.376170512870744
+Replicate factor: 15.280690671720363
+Memory cost: -9 MB
+---------------end-------------

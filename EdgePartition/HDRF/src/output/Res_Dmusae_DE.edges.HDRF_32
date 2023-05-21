@@ -1,0 +1,30 @@
+input graph: newpartition/src/data/musae_DE.edges
+vCount: 9498
+eCount: 153138
+averageDegree: 32.2463676563487
+partitionNum: 32
+lambda: 1.05
+epsilon: 1.0E-4
+partitionNum: 32
+---------------start-------------
+Partition num:32
+Partition time: 87 ms
+Relative balance load:32.0
+Replicate factor: 1.0
+Memory cost: -4 MB
+---------------end-------------
+input graph: newpartition/src/data/musae_DE.edges
+vCount: 9498
+eCount: 153138
+averageDegree: 32.2463676563487
+partitionNum: 32
+lambda: 1.05
+epsilon: 1.0E-4
+partitionNum: 32
+---------------start-------------
+Partition num:32
+Partition time: 105 ms
+Relative balance load:1.3058026094111193
+Replicate factor: 14.291745630659086
+Memory cost: -4 MB
+---------------end-------------
