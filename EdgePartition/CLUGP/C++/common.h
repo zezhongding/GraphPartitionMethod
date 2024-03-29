@@ -11,6 +11,7 @@
 #include <chrono>
 #include <thread>
 #include <future>
+#include <functional>
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -25,8 +26,9 @@
 #include <fcntl.h>
 #include <stdexcept>
 #include <limits>
-#include "omp.h"
+#include <random>
 #include <memory>
+#include "omp.h"
 
 # define THREADNUM 16
 # define BATCH 204800

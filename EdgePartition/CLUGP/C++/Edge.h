@@ -17,6 +17,12 @@ public:
 	int getDestVId() const;
 	int getWeight() const;
 	void addWeight();
+	bool operator==(const Edge& other) const;
 };
+
+struct EdgeHash {
+	size_t operator()(const Edge& edge) const;
+};
+
 
 #endif
