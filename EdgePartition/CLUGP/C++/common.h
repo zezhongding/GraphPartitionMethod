@@ -26,6 +26,7 @@
 #include <stdexcept>
 #include <limits>
 #include "omp.h"
+#include <memory>
 
 # define THREADNUM 16
 # define BATCH 204800
