@@ -1,5 +1,5 @@
 # CLUGP (ICDE'2022) C++ Version
-This is the implementation of CLUGP (ICDE'22) by Darkness Lab, USTC.
+This is the implementation of CLUGP (ICDE'22) by Data Darkness Lab, USTC.
 
 ```bash
 @inproceedings{KongXZ22,
