@@ -84,3 +84,18 @@ int GlobalConfig::getThreads() const {
 std::string GlobalConfig::getOutputGraphPath() const {
 	return outputGraphPath;
 }
+
+void GlobalConfig::printParaInfo() const {
+	std::cout << "input graph: " << this->inputGraphPath << std::endl;
+	std::cout << "vCount: " << this->vCount << std::endl;
+	std::cout << "eCount: " << this->eCount << std::endl;
+	std::cout << "partitionNum: " << this->partitionNum << std::endl;
+	std::cout << "alpha: " << this->alpha << std::endl;
+	std::cout << "k: " << this->k << std::endl;
+	std::cout << "l: " << this->l << std::endl;
+	std::cout << "batchSize: " << this->batchSize << std::endl;
+	std::cout << "threads: " << this->threads << std::endl;
+	std::cout << "MaxClusterVolume: " << this->getMaxClusterVolume() << std::endl;
+	std::cout << "compressionRate: " << this->compressionRate << std::endl;
+	std::cout << "hashNum: " << this->hashNum << std::endl;
+}

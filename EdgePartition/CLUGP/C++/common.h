@@ -28,6 +28,8 @@
 #include <limits>
 #include <random>
 #include <memory>
+#include <future>
+#include <chrono>
 #include "omp.h"
 
 # define THREADNUM 16

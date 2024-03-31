@@ -34,6 +34,7 @@ public:
 	int getBatchSize() const;
 	int getThreads() const;
 	std::string getOutputGraphPath() const;
+	void printParaInfo() const;
 };
 
 #endif // GLOBALCONFIG_H
