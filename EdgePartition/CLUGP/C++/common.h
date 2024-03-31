@@ -30,7 +30,4 @@
 #include <memory>
 #include <future>
 #include <chrono>
-#include "omp.h"
-
-# define THREADNUM 16
-# define BATCH 204800
+#include <omp.h>

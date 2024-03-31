@@ -22,8 +22,8 @@ private:
     std::shared_ptr<OriginGraph> graph;
     std::unordered_map<int, int> clusterPartition;
     int roundCnt;
-    long gameStartTime;
-    long gameEndTime;
+    std::chrono::time_point<std::chrono::system_clock> gameStartTime;
+    std::chrono::time_point<std::chrono::system_clock> gameEndTime;
     int taskNum;
     int clusterSize;
 };

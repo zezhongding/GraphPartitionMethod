@@ -33,7 +33,7 @@ void convertFile(const std::string& inputFilePath, const std::string& outputFile
 			newEndVid = id++;
 			ht[endVid] = newEndVid;
 		}
-
+		ht.clear();
 		if (lineNum != 0) {
 			outputFile << "\n";
 		}

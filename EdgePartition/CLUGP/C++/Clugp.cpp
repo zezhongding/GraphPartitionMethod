@@ -18,6 +18,7 @@ std::unordered_map<int, int> mergeMaps(const std::vector<std::unordered_map<int,
 		for (const auto& pair : localResult) {
 			result[pair.first] += pair.second;
 		}
+		localResult.clear();
 	}
 
 	return result;
@@ -27,8 +28,8 @@ Clugp::Clugp(GlobalConfig& config)
 {
 	graph = std::make_shared<OriginGraph>(config);
 	roundCnt = 0;
-	gameStartTime = 0;
-	gameEndTime = 0;
+	gameStartTime = std::chrono::system_clock::now();
+	gameEndTime = std::chrono::system_clock::now();
 	taskNum = 0;
 	clusterSize = 0;
 }
@@ -61,23 +62,24 @@ void Clugp::main(GlobalConfig& config) {
 	std::cout << "Relative balance load:" << lb << std::endl;
 	std::cout << "Replicate factor: " << rf << std::endl;
 	std::cout << "Total game round:" << roundCnt << std::endl;
-	auto gameDuration = std::chrono::milliseconds(gameEndTime - gameStartTime);
-	std::cout << "Cluster game time: " << gameDuration.count() << " ms" << std::endl;
+	auto duration = gameEndTime - gameStartTime;
+	auto gameDuration = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+	std::cout << "Cluster game time: " << gameDuration << " ms" << std::endl;
 	std::cout << "---------------end-------------" << std::endl;
 }
 
 void Clugp::parallelGame(GlobalConfig& config, std::shared_ptr<StreamCluster> streamCluster, const std::vector<int>& clusterList) {
-	int clusterSize = clusterList.size();
+	clusterSize = clusterList.size();
 	std::cout << "Cluster Size: " << clusterSize << std::endl;
-	int taskNum = (clusterSize + config.getBatchSize() - 1) / config.getBatchSize();
+	taskNum = (clusterSize + config.getBatchSize() - 1) / config.getBatchSize();
 	std::cout << "TaskNum: " << taskNum << std::endl;
 	std::cout << "Cluster num: " << clusterSize << std::endl;
 
-	auto gameStartTime = std::chrono::system_clock::now();
+	gameStartTime = std::chrono::system_clock::now();
 
 	std::vector<std::shared_ptr<ClusterPackGame>> games(taskNum); // 假设有默认构造函数
 
-	int roundCnt = 0;
+	roundCnt = 0;
 
 	// 使用OpenMP并行化for循环
 	#pragma omp parallel for
@@ -89,13 +91,13 @@ void Clugp::parallelGame(GlobalConfig& config, std::shared_ptr<StreamCluster> st
 	std::vector<std::unordered_map<int, int>> parts(taskNum);
 	for (int i = 0; i < taskNum; ++i) {
 		parts[i] = games[i]->getClusterPartition(); // 假设这是正确的方法获取数据
-		//clusterPartition.insert(part.begin(), part.end());
-		//std::unordered_map<int, int>::iterator it = part.begin();
-		//std::merge(map1.begin(),map1.end(),map2.begin(),map2.end(),inserter(part,it));
 		roundCnt += games[i]->getRoundCnt();
 	}
 
-	std::unordered_map<int, int> clusterPartition = mergeMaps(parts);
+	this->clusterPartition = mergeMaps(parts);
 
-	auto gameEndTime = std::chrono::system_clock::now();
+	for (int i = 0; i < taskNum; ++i)
+		parts[i].clear();
+
+	gameEndTime = std::chrono::system_clock::now();
 }
