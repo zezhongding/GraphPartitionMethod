@@ -8,11 +8,11 @@
 
 class ClusterGameTask {
 public:
-	ClusterGameTask(GlobalConfig& config,StreamCluster* streamCluster, int taskId);
-	ClusterPackGame* call(GlobalConfig& config);
+	ClusterGameTask(GlobalConfig& config,std::shared_ptr<StreamCluster> streamCluster, int taskId);
+	std::shared_ptr<ClusterPackGame> call(GlobalConfig& config);
 
 private:
-	StreamCluster* streamCluster;
+	std::shared_ptr<StreamCluster> streamCluster;
 	std::vector<int> cluster;
 };
 

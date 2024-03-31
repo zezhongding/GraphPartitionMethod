@@ -18,7 +18,7 @@ public:
     void main(GlobalConfig& config);
 
 private:
-    void parallelGame(GlobalConfig& config, StreamCluster& streamCluster, const std::vector<int>& clusterList);
+    void parallelGame(GlobalConfig& config, std::shared_ptr<StreamCluster> streamCluster, const std::vector<int>& clusterList);
     std::shared_ptr<OriginGraph> graph;
     std::unordered_map<int, int> clusterPartition;
     int roundCnt;

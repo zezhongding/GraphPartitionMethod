@@ -1,6 +1,6 @@
 #include "CluSP.h"
 
-CluSP::CluSP(GlobalConfig& config,std::shared_ptr<Graph> originGraph, StreamCluster* streamCluster, std::unordered_map<int, int>& clusterPartition)
+CluSP::CluSP(GlobalConfig& config,std::shared_ptr<Graph> originGraph, std::shared_ptr<StreamCluster> streamCluster, std::unordered_map<int, int>& clusterPartition)
 : originGraph(originGraph), streamCluster(streamCluster), clusterPartition(clusterPartition) {
     partitionLoad.resize(config.getPartitionNum());
     replicateTable.reserve(config.getVCount());

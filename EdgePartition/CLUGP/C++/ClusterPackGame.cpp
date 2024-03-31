@@ -1,6 +1,6 @@
 #include "ClusterPackGame.h"
 
-ClusterPackGame::ClusterPackGame(GlobalConfig& config,StreamCluster* streamCluster, const std::vector<int>& clusterList)
+ClusterPackGame::ClusterPackGame(GlobalConfig& config,std::shared_ptr<StreamCluster> streamCluster, const std::vector<int>& clusterList)
 	: streamCluster(streamCluster), clusterList(clusterList), beta(0.0), roundCnt(0) {
 	partitionLoad.resize(config.getPartitionNum(), 0.0);
 }

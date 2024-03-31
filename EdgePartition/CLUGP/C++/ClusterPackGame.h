@@ -14,12 +14,12 @@ private:
     std::unordered_map<int, std::unordered_set<int>> clusterNeighbours;
     std::vector<double> partitionLoad;
     std::vector<int> clusterList;
-    StreamCluster* streamCluster;
+    std::shared_ptr<StreamCluster> streamCluster;
     double beta;
     int roundCnt;
 
 public:
-    ClusterPackGame(GlobalConfig& config,StreamCluster* streamCluster, const std::vector<int>& clusterList);
+    ClusterPackGame(GlobalConfig& config,std::shared_ptr<StreamCluster> streamCluster, const std::vector<int>& clusterList);
     virtual void initGame(GlobalConfig& config) override;
     virtual void startGame(GlobalConfig& config) override;
     int getRoundCnt() const;

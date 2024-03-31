@@ -9,7 +9,7 @@
 class ClusterTask {
 public:
     ClusterTask(std::shared_ptr<Graph> graph, int taskId);
-    StreamCluster* call(GlobalConfig& config);
+    std::shared_ptr<StreamCluster> call(GlobalConfig& config);
 
 private:
     std::shared_ptr<Graph> graph;

@@ -39,13 +39,13 @@ void Clugp::main(GlobalConfig& config) {
 	std::cout << "---------------start-------------" << std::endl;
 	auto startTime = std::chrono::system_clock::now();
 
-	StreamCluster streamCluster(config, graph);
-	streamCluster.startSteamCluster(config);
-	std::vector<int> clusterList = streamCluster.getClusterList();
+	std::shared_ptr<StreamCluster> streamCluster = std::make_shared<StreamCluster>(config, graph);
+	streamCluster->startSteamCluster(config);
+	std::vector<int> clusterList = streamCluster->getClusterList();
 
 	parallelGame(config, streamCluster, clusterList);
 
-	CluSP cluSP(config, graph, &streamCluster, clusterPartition);
+	CluSP cluSP(config, graph, streamCluster, clusterPartition);
 	cluSP.performStep(config);
 
 	auto endTime = std::chrono::system_clock::now();
@@ -66,7 +66,7 @@ void Clugp::main(GlobalConfig& config) {
 	std::cout << "---------------end-------------" << std::endl;
 }
 
-void Clugp::parallelGame(GlobalConfig& config, StreamCluster& streamCluster, const std::vector<int>& clusterList) {
+void Clugp::parallelGame(GlobalConfig& config, std::shared_ptr<StreamCluster> streamCluster, const std::vector<int>& clusterList) {
 	int clusterSize = clusterList.size();
 	std::cout << "Cluster Size: " << clusterSize << std::endl;
 	int taskNum = (clusterSize + config.getBatchSize() - 1) / config.getBatchSize();
@@ -75,14 +75,15 @@ void Clugp::parallelGame(GlobalConfig& config, StreamCluster& streamCluster, con
 
 	auto gameStartTime = std::chrono::system_clock::now();
 
-	std::vector<ClusterPackGame*> games(taskNum); // 假设有默认构造函数
+	std::vector<std::shared_ptr<ClusterPackGame>> games(taskNum); // 假设有默认构造函数
 
 	int roundCnt = 0;
 
 	// 使用OpenMP并行化for循环
 	#pragma omp parallel for
 	for (int i = 0; i < taskNum; ++i) {
-		games[i] = ClusterGameTask(config, &streamCluster, i).call(config);
+		std::shared_ptr<ClusterGameTask> cpg = std::make_shared<ClusterGameTask>(config, streamCluster, i);
+		games[i] = cpg->call(config);
 	}
 
 	std::vector<std::unordered_map<int, int>> parts(taskNum);

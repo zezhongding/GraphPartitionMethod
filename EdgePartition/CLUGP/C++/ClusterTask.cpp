@@ -2,8 +2,8 @@
 
 ClusterTask::ClusterTask(std::shared_ptr<Graph> graph, int taskId) : graph(graph), taskId(taskId) {}
 
-StreamCluster* ClusterTask::call(GlobalConfig& config) {
-    StreamCluster* streamCluster = new StreamCluster(config,graph);
+std::shared_ptr<StreamCluster> ClusterTask::call(GlobalConfig& config) {
+    std::shared_ptr<StreamCluster> streamCluster = std::make_shared<StreamCluster>(config,graph);
     streamCluster->startSteamCluster(config);
     return streamCluster;
 }

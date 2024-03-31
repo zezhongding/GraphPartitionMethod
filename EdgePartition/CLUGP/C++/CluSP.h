@@ -11,14 +11,14 @@
 class CluSP : public PartitionStrategy {
 private:
     std::shared_ptr<Graph> originGraph;
-    StreamCluster* streamCluster;
+    std::shared_ptr<StreamCluster> streamCluster;
     std::vector<int> partitionLoad;
     std::unordered_map<int, std::unordered_set<int>> replicateTable;
     std::unordered_map<int, int> clusterPartition;
     std::ofstream bufferedWriter;
 
 public:
-    CluSP(GlobalConfig& config,std::shared_ptr<Graph> originGraph, StreamCluster* streamCluster, std::unordered_map<int, int>& clusterPartition);
+    CluSP(GlobalConfig& config,std::shared_ptr<Graph> originGraph, std::shared_ptr<StreamCluster> streamCluster, std::unordered_map<int, int>& clusterPartition);
     virtual ~CluSP() {}
 
     virtual void performStep(GlobalConfig& config) override;
