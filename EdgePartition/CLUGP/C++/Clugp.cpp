@@ -34,7 +34,7 @@ Clugp::Clugp(GlobalConfig& config)
 }
 
 
-void Clugp::main(GlobalConfig& config, const std::vector<std::string>& args) {
+void Clugp::main(GlobalConfig& config) {
 
 	std::cout << "---------------start-------------" << std::endl;
 	auto startTime = std::chrono::system_clock::now();

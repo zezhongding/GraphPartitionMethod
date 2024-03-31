@@ -15,7 +15,7 @@ std::unordered_map<int, int> mergeMaps(const std::vector<std::unordered_map<int,
 class Clugp {
 public:
     Clugp(GlobalConfig& config);
-    void main(GlobalConfig& config, const std::vector<std::string>& args);
+    void main(GlobalConfig& config);
 
 private:
     void parallelGame(GlobalConfig& config, StreamCluster& streamCluster, const std::vector<int>& clusterList);
