@@ -10,3 +10,4 @@
 **/CMakeFiles/
 **/*.cmake
 **/Makefile
+**/main
