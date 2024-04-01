@@ -81,16 +81,12 @@ void Clugp::parallelGame(GlobalConfig& config, std::shared_ptr<StreamCluster> st
 
 	roundCnt = 0;
 
-	std::cout << "parallel game 1" << std::endl;
-
 	// 使用OpenMP并行化for循环
 	#pragma omp parallel for
 	for (int i = 0; i < taskNum; ++i) {
 		std::shared_ptr<ClusterGameTask> cpg = std::make_shared<ClusterGameTask>(config, streamCluster, i);
 		games[i] = cpg->call(config);
 	}
-
-	std::cout << "parallel game 2" << std::endl;
 
 	std::vector<std::unordered_map<int, int>> parts(taskNum);
 	for (int i = 0; i < taskNum; ++i) {

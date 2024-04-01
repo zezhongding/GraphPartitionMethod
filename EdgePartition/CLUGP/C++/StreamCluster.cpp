@@ -30,19 +30,16 @@ void StreamCluster::startSteamCluster(GlobalConfig& config) {
 	double numsNode = 0;
 	int clusterID = 1;
 
-	graph->readGraphFromFile(config);
-	Edge edge;
 	//First Time
-	while(!(graph->iseof())){
-		edge = graph->readStep();
-		if(edge.isNull())
-		{
-			//std::cout << "break" << std::endl;
-			break;
-		}
+	std::pair<int,int> e(-1,-1);
+	TGEngine tgEngine(config.getInputGraphPath(),config.getVCount(),config.getECount());
+
+	while(-1 != tgEngine.readline(e)){
+		int src = e.first;
+		int dest = e.second;
+		if(src < 0 || dest < 0 || src >= config.getVCount() || dest >= config.getVCount())
+			continue;
 		numsEdge += 2;
-		int src = edge.getSrcVId();
-		int dest = edge.getDestVId();
 		// allocate cluster
 		if (cluster[src] == 0) {
 			cluster[src] = clusterID++;
@@ -85,7 +82,6 @@ void StreamCluster::startSteamCluster(GlobalConfig& config) {
 		// combine cluster
 		combineCluster(src, dest);
 	}
-	graph->closef();
 	setUpIndex();
 	computeEdgeInfo(config);
 }
@@ -117,24 +113,24 @@ void StreamCluster::setUpIndex(){
 void StreamCluster::computeEdgeInfo(GlobalConfig& config) {
 	// compute inner and cut edge
 	// Second Time
-	graph->readGraphFromFile(config);
-	Edge edge;
+	std::pair<int,int> e(-1,-1);
+	TGEngine tgEngine(config.getInputGraphPath(),config.getVCount(),config.getECount());
+
 	double sum = 0.0;
-	while(!(graph->iseof())){
-		edge = graph->readStep();
-		if(edge.isNull())
-			break;
-		int src = edge.getSrcVId();
-		int dest = edge.getDestVId();
+	while(-1 != tgEngine.readline(e)){
+		int src = e.first;
+		int dest = e.second;
+		if(src < 0 || dest < 0 || src >= config.getVCount() || dest >= config.getVCount())
+			continue;
 		if(cluster[src] != cluster[dest]) sum++;
 		if (innerAndCutEdge.find(cluster[src]) == innerAndCutEdge.end())
 			innerAndCutEdge.insert({cluster[src], std::unordered_map<int,int>()});
 		if (innerAndCutEdge[cluster[src]].find(cluster[dest]) == innerAndCutEdge[cluster[src]].end())
 			innerAndCutEdge[cluster[src]][cluster[dest]] = 0;
 		int oldValue = innerAndCutEdge[cluster[src]][cluster[dest]];
-		innerAndCutEdge[cluster[src]][cluster[dest]] = oldValue + edge.getWeight();
+		innerAndCutEdge[cluster[src]][cluster[dest]] = oldValue + 1;//edge.getWeight();
 	}
-	graph->closef();
+	//graph->closef();
 	std::cout << "Cluster rep: " << (sum + config.getVCount()) / config.getVCount() << std::endl;
 }
 

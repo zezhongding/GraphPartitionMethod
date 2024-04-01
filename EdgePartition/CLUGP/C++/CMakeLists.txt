@@ -28,6 +28,9 @@ add_executable(main main.cpp
                 FileProcess.cpp
                 globalConfig.cpp
                 OriginGraph.cpp
-                StreamCluster.cpp)
+                StreamCluster.cpp
+                readGraph.cpp)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 
 target_link_libraries(main PRIVATE Threads::Threads)

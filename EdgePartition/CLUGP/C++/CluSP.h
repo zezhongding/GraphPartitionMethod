@@ -7,6 +7,7 @@
 #include "Edge.h"
 #include "globalConfig.h"
 #include "common.h"
+#include "readGraph.h"
 
 class CluSP : public PartitionStrategy {
 private:

@@ -1,6 +1,7 @@
 #ifndef STREAMCLUSTER_H
 #define STREAMCLUSTER_H
 #include "Graph.h"
+#include "readGraph.h"
 
 class StreamCluster {
 private:
