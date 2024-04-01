@@ -8,6 +8,8 @@
 #include "common.h"
 #include "readGraph.h"
 
+inline void output(std::ofstream& fout,const int srcid,const int destid,const int partition);
+
 class CluSP : public PartitionStrategy {
 private:
     std::shared_ptr<StreamCluster> streamCluster;
@@ -24,7 +26,6 @@ public:
     virtual void clear() override;
     virtual double getReplicateFactor(GlobalConfig& config) override;
     virtual double getLoadBalance(GlobalConfig& config) override;
-    void output(const Edge& edge, int partition);
     void printInfo();
 };
 

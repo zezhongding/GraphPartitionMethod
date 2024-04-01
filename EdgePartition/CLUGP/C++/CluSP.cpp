@@ -4,6 +4,16 @@ CluSP::CluSP(GlobalConfig& config, std::shared_ptr<StreamCluster> streamCluster,
 : streamCluster(streamCluster), clusterPartition(clusterPartition) {
 	partitionLoad.resize(config.getPartitionNum());
 	replicateTable.reserve(config.getVCount());
+	try{
+		bufferedWriter.open(config.getOutputGraphPath().c_str(),std::ios::out|std::ios::binary);
+	} catch (const std::ofstream::failure& e) {
+		std::cerr << "open output file failed." << e.what() << "\t" << std::strerror(errno) << std::endl;
+	}
+	
+	if(!bufferedWriter.is_open())
+	{
+		std::cerr << "open output file fail!" << std::endl;
+	}
 }
 
 void CluSP::performStep(GlobalConfig& config) {
@@ -40,6 +50,7 @@ void CluSP::performStep(GlobalConfig& config) {
 			destPartition = srcPartition;
 		}
 		partitionLoad[edgePartition]++;
+		output(this->bufferedWriter,src,dest,edgePartition);
 		replicateTable[src].insert(srcPartition);
 		replicateTable[dest].insert(destPartition);
 	}
@@ -67,13 +78,11 @@ double CluSP::getLoadBalance(GlobalConfig& config) {
 	return static_cast<double>(config.getPartitionNum()) / config.getECount() * maxLoad;
 }
 
-void CluSP::output(const Edge& edge, int partition) {
-	try {
-		bufferedWriter << edge.getSrcVId() << "\t" << edge.getDestVId() << "\t" << partition << "\n";
-	} catch (const std::exception& ex) {
-		// Handle exception or log error
-		std::cerr << "output CluSP error!" << std::endl;
-	}
+
+inline void output(std::ofstream& fout,const int srcid,const int destid,const int partition)
+{
+	if(fout.is_open())
+		fout << srcid << "\t" << destid << "\t" << partition << std::endl;
 }
 
 void CluSP::printInfo() {
