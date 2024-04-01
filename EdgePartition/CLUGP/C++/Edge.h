@@ -11,7 +11,6 @@ private:
 	int weight;
 public:
 	Edge();
-	bool isNull() const;
 	Edge(const int srcVId, const int destVId, const int weight);
 	int getSrcVId() const; 
 	int getDestVId() const;

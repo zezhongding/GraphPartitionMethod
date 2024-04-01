@@ -26,7 +26,6 @@ std::unordered_map<int, int> mergeMaps(const std::vector<std::unordered_map<int,
 
 Clugp::Clugp(GlobalConfig& config)
 {
-	graph = std::make_shared<OriginGraph>(config);
 	roundCnt = 0;
 	gameStartTime = std::chrono::system_clock::now();
 	gameEndTime = std::chrono::system_clock::now();
@@ -40,13 +39,13 @@ void Clugp::main(GlobalConfig& config) {
 	std::cout << "---------------start-------------" << std::endl;
 	auto startTime = std::chrono::system_clock::now();
 
-	std::shared_ptr<StreamCluster> streamCluster = std::make_shared<StreamCluster>(config, graph);
+	std::shared_ptr<StreamCluster> streamCluster = std::make_shared<StreamCluster>(config);
 	streamCluster->startSteamCluster(config);
 	std::vector<int> clusterList = streamCluster->getClusterList();
 
 	parallelGame(config, streamCluster, clusterList);
 
-	CluSP cluSP(config, graph, streamCluster, clusterPartition);
+	CluSP cluSP(config, streamCluster, clusterPartition);
 	cluSP.performStep(config);
 
 	auto endTime = std::chrono::system_clock::now();
@@ -54,7 +53,6 @@ void Clugp::main(GlobalConfig& config) {
 	double rf = cluSP.getReplicateFactor(config);
 	double lb = cluSP.getLoadBalance(config);
 
-	graph->clear();
 	cluSP.clear();
 
 	std::cout << "Partition num:" << config.getPartitionNum() << std::endl;

@@ -3,13 +3,12 @@
 
 #include "common.h"
 #include "Edge.h"
-#include "Graph.h"
 #include "EdgePartitionGame.h"
 #include "globalConfig.h"
 
 class EdgeGameTask {
 public:
-    EdgeGameTask(GlobalConfig& config, std::shared_ptr<Graph> graph, int taskId);
+    EdgeGameTask(GlobalConfig& config, std::vector<Edge>& edgeList, int taskId);
     std::unordered_map<Edge, int, EdgeHash> call(GlobalConfig& config);
 
 private:

@@ -1,8 +1,6 @@
 #include "StreamCluster.h"
-#include "globalConfig.h" // 确保这是GlobalConfig类的正确包含路径
 
-StreamCluster::StreamCluster(GlobalConfig& config,std::shared_ptr<Graph> graph) {
-	this->graph = graph;
+StreamCluster::StreamCluster(GlobalConfig& config) {
 	cluster.resize(config.getVCount(), 0);
 	degree.resize(config.getVCount(), 0);
 	maxVolume = config.getMaxClusterVolume();
@@ -130,7 +128,6 @@ void StreamCluster::computeEdgeInfo(GlobalConfig& config) {
 		int oldValue = innerAndCutEdge[cluster[src]][cluster[dest]];
 		innerAndCutEdge[cluster[src]][cluster[dest]] = oldValue + 1;//edge.getWeight();
 	}
-	//graph->closef();
 	std::cout << "Cluster rep: " << (sum + config.getVCount()) / config.getVCount() << std::endl;
 }
 
@@ -178,7 +175,7 @@ std::string StreamCluster::toString() const{
 	for(auto & kv: volume){
 		volumeStr << "cluster " << kv.first << " volume: " << kv.second << std::endl;
 	}
-	for (int i = 0; i < graph->getVCount(); i++) {
+	for (int i = 0; i < cluster.size(); i++) {
         clusterStr << "vid : " << i << " cluster: " << cluster[i] << std::endl;
     }
 	std::string ret = volumeStr.str() + clusterStr.str();

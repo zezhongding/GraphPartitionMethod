@@ -6,10 +6,6 @@ Edge::Edge() {
 	this->weight = -1;
 }
 
-bool Edge::isNull() const {
-	return ((this->srcVId < 0) && (this->destVId < 0) && (this->weight < 0));
-}
-
 Edge::Edge(const int srcVId, const int destVId, const int weight) {
 	this->srcVId = srcVId;
 	this->destVId = destVId;

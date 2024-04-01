@@ -1,7 +1,8 @@
 #ifndef STREAMCLUSTER_H
 #define STREAMCLUSTER_H
-#include "Graph.h"
+
 #include "readGraph.h"
+#include "globalConfig.h"
 
 class StreamCluster {
 private:
@@ -9,11 +10,10 @@ private:
 	std::vector<int> degree;
 	std::unordered_map<int, int> volume;
 	std::unordered_map<int, std::unordered_map<int, int>> innerAndCutEdge;
-	std::shared_ptr<Graph> graph;
 	std::vector<int> clusterList;
 	int maxVolume;
 public:
-	StreamCluster(GlobalConfig& config,std::shared_ptr<Graph> graph);
+	StreamCluster(GlobalConfig& config);
 	void startSteamCluster(GlobalConfig& config);
 	void combineCluster(int srcVid, int destVid);
 	void setUpIndex();

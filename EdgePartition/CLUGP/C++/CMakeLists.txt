@@ -27,7 +27,6 @@ add_executable(main main.cpp
                 FileConvert.cpp
                 FileProcess.cpp
                 globalConfig.cpp
-                OriginGraph.cpp
                 StreamCluster.cpp
                 readGraph.cpp)
 
