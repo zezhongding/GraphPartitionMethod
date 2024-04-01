@@ -10,11 +10,10 @@ private:
 	int vCount;
 	int eCount;
 	std::ifstream bufferedReader;
-
 public:
+
 	OriginGraph(GlobalConfig& config);
 	virtual ~OriginGraph() {}
-
 	void readGraphFromFile(GlobalConfig& config) override;
 	int getVCount() const override;
 	int getECount() const override;
@@ -22,6 +21,8 @@ public:
 	std::vector<Edge> getEdgeList() const override;
 	void clear() override;
 	Edge readStep() override;
+	void closef() override;
+	bool iseof() const override;
 };
 
 #endif // ORIGINGRAPH_H

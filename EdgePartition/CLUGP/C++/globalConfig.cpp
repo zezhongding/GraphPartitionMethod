@@ -3,7 +3,7 @@
 GlobalConfig::GlobalConfig(std::string filepath) {
 	std::ifstream configFile(filepath);
 	std::string line;
-	while (std::getline(configFile, line)) {
+	while (std::getline(configFile, line, '\n')) {
 		if (line.empty() || line[0] == '#')
 			continue;
 
@@ -26,7 +26,9 @@ GlobalConfig::GlobalConfig(std::string filepath) {
 	vCount = std::stoi(properties["vCount"]);
 	eCount = std::stoi(properties["eCount"]);
 	inputGraphPath = properties["inputGraphPath"];
+	inputGraphPath.pop_back(); //会读入换行符到文件
 	outputGraphPath = properties["outputGraphPath"];
+	outputGraphPath.pop_back();
 	alpha = std::stof(properties["alpha"]);
 	partitionNum = std::stoi(properties["partitionNum"]);
 	batchSize = std::stoi(properties["batchSize"]);

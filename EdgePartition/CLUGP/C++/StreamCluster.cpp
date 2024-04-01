@@ -33,11 +33,13 @@ void StreamCluster::startSteamCluster(GlobalConfig& config) {
 	graph->readGraphFromFile(config);
 	Edge edge;
 	//First Time
-	//while((edge = graph.readStep()) && edge.isNull() == false) {
-	while(true){
+	while(!(graph->iseof())){
 		edge = graph->readStep();
 		if(edge.isNull())
+		{
+			//std::cout << "break" << std::endl;
 			break;
+		}
 		numsEdge += 2;
 		int src = edge.getSrcVId();
 		int dest = edge.getDestVId();
@@ -83,7 +85,7 @@ void StreamCluster::startSteamCluster(GlobalConfig& config) {
 		// combine cluster
 		combineCluster(src, dest);
 	}
-
+	graph->closef();
 	setUpIndex();
 	computeEdgeInfo(config);
 }
@@ -116,11 +118,9 @@ void StreamCluster::computeEdgeInfo(GlobalConfig& config) {
 	// compute inner and cut edge
 	// Second Time
 	graph->readGraphFromFile(config);
-	//std::unordered_map<int, std::unordered_set<int>> replicateTable;
 	Edge edge;
 	double sum = 0.0;
-	//while((edge = graph.readStep()) && edge.isNull() == false){
-	while(1){
+	while(!(graph->iseof())){
 		edge = graph->readStep();
 		if(edge.isNull())
 			break;
@@ -134,7 +134,7 @@ void StreamCluster::computeEdgeInfo(GlobalConfig& config) {
 		int oldValue = innerAndCutEdge[cluster[src]][cluster[dest]];
 		innerAndCutEdge[cluster[src]][cluster[dest]] = oldValue + edge.getWeight();
 	}
-
+	graph->closef();
 	std::cout << "Cluster rep: " << (sum + config.getVCount()) / config.getVCount() << std::endl;
 }
 

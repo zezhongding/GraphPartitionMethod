@@ -15,6 +15,8 @@ public:
 	virtual std::vector<Edge> getEdgeList() const = 0;
 	virtual void clear() = 0;
 	virtual Edge readStep() = 0;
+	virtual void closef() = 0;
+	virtual bool iseof() const = 0;
 };
 
 #endif // GRAPH_H
