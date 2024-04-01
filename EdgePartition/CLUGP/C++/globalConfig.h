@@ -17,6 +17,7 @@ private:
 	int partitionNum;
 	int batchSize;
 	int threads;
+	bool output;
 
 public:
 	GlobalConfig() {};
@@ -35,6 +36,7 @@ public:
 	int getThreads() const;
 	std::string getOutputGraphPath() const;
 	void printParaInfo() const;
+	bool getOutput() const;
 };
 
 #endif // GLOBALCONFIG_H

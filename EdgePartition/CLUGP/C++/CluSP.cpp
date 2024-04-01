@@ -4,15 +4,17 @@ CluSP::CluSP(GlobalConfig& config, std::shared_ptr<StreamCluster> streamCluster,
 : streamCluster(streamCluster), clusterPartition(clusterPartition) {
 	partitionLoad.resize(config.getPartitionNum());
 	replicateTable.reserve(config.getVCount());
-	try{
-		bufferedWriter.open(config.getOutputGraphPath().c_str(),std::ios::out|std::ios::binary);
-	} catch (const std::ofstream::failure& e) {
-		std::cerr << "open output file failed." << e.what() << "\t" << std::strerror(errno) << std::endl;
-	}
-	
-	if(!bufferedWriter.is_open())
+	if(config.getOutput())
 	{
-		std::cerr << "open output file fail!" << std::endl;
+		try{
+			bufferedWriter.open(config.getOutputGraphPath().c_str(),std::ios::out|std::ios::binary);
+		} catch (const std::ofstream::failure& e) {
+			std::cerr << "open output file failed." << e.what() << "\t" << std::strerror(errno) << std::endl;
+		}
+		if(!bufferedWriter.is_open())
+		{
+			std::cerr << "open output file fail!" << std::endl;
+		}
 	}
 }
 
@@ -50,7 +52,8 @@ void CluSP::performStep(GlobalConfig& config) {
 			destPartition = srcPartition;
 		}
 		partitionLoad[edgePartition]++;
-		output(this->bufferedWriter,src,dest,edgePartition);
+		if(config.getOutput())
+			output(this->bufferedWriter,src,dest,edgePartition);
 		replicateTable[src].insert(srcPartition);
 		replicateTable[dest].insert(destPartition);
 	}

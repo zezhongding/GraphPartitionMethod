@@ -15,7 +15,7 @@ GlobalConfig::GlobalConfig(std::string filepath) {
 
 		std::string key = line.substr(0, delimiterPos);
 		std::string value = line.substr(delimiterPos + 1);
-		std::cout << key  << " = " << value << std::endl;
+		//std::cout << key  << " = " << value << std::endl;
 		properties[key] = value;
 	}
 
@@ -26,13 +26,26 @@ GlobalConfig::GlobalConfig(std::string filepath) {
 	vCount = std::stoi(properties["vCount"]);
 	eCount = std::stoi(properties["eCount"]);
 	inputGraphPath = properties["inputGraphPath"];
-	inputGraphPath.pop_back(); //会读入换行符到文件
+	if(inputGraphPath[inputGraphPath.length()-1] == '\r')
+		inputGraphPath.pop_back();
 	outputGraphPath = properties["outputGraphPath"];
-	outputGraphPath.pop_back();
+	if(outputGraphPath[outputGraphPath.length()-1] == '\r')
+		outputGraphPath.pop_back();
 	alpha = std::stof(properties["alpha"]);
 	partitionNum = std::stoi(properties["partitionNum"]);
 	batchSize = std::stoi(properties["batchSize"]);
 	threads = std::stoi(properties["threads"]);
+	std::string useoutput = properties["output"];
+	if(useoutput[useoutput.length()-1] == '\r')
+		useoutput.pop_back();
+	if(useoutput == "Yes" || useoutput == "yes")
+		output = true;
+	else
+		output = false;
+}
+
+bool GlobalConfig::getOutput() const {
+	return output;
 }
 
 int GlobalConfig::getHashNum() const {
@@ -100,4 +113,5 @@ void GlobalConfig::printParaInfo() const {
 	std::cout << "MaxClusterVolume: " << this->getMaxClusterVolume() << std::endl;
 	std::cout << "compressionRate: " << this->compressionRate << std::endl;
 	std::cout << "hashNum: " << this->hashNum << std::endl;
+	std::cout << "output: " << this->output << std::endl;
 }
